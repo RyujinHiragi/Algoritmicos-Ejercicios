@@ -516,3 +516,160 @@ print("Archivos encontrados:")
 for archivo in archivos_encontrados:
     print(archivo)
 ```
+# Calculadora de Notas
+
+Esta es una aplicación de Flutter que calcula la nota final de una materia basada en cuatro notas con diferentes pesos.
+
+## Descripción
+
+La aplicación permite ingresar cuatro notas y calcula la nota final basándose en los siguientes pesos:
+
+- Nota 1: 32.79%
+- Nota 2: 32.79%
+- Nota 3: 32.79%
+- Nota 4: 1.64%
+
+La nota final se ajusta para estar en el rango de 0.0 a 5.0.
+
+## Características
+
+- Entrada de notas a través de campos de texto.
+- Validación para asegurar que las notas estén entre 0.0 y 5.0.
+- Cálculo de la nota final basado en los pesos asignados.
+- Visualización de la nota final calculada.
+
+## Instalación
+
+### Prerrequisitos
+
+- Flutter SDK: [Instrucciones de instalación](https://flutter.dev/docs/get-started/install)
+- Android Studio o Visual Studio Code con los plugins de Flutter y Dart instalados.
+  
+### Codigo
+```
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(CalculadoraNotasApp());
+}
+
+class CalculadoraNotasApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Calculadora de Notas',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: CalculadoraNotasPage(),
+    );
+  }
+}
+
+class CalculadoraNotasPage extends StatefulWidget {
+  @override
+  _CalculadoraNotasPageState createState() => _CalculadoraNotasPageState();
+}
+
+class _CalculadoraNotasPageState extends State<CalculadoraNotasPage> {
+  final TextEditingController _nota1Controller = TextEditingController();
+  final TextEditingController _nota2Controller = TextEditingController();
+  final TextEditingController _nota3Controller = TextEditingController();
+  final TextEditingController _nota4Controller = TextEditingController();
+
+  double _notaFinal = 0.0;
+
+  void _calcularNotaFinal() {
+    double nota1 = double.tryParse(_nota1Controller.text) ?? 0.0;
+    double nota2 = double.tryParse(_nota2Controller.text) ?? 0.0;
+    double nota3 = double.tryParse(_nota3Controller.text) ?? 0.0;
+    double nota4 = double.tryParse(_nota4Controller.text) ?? 0.0;
+
+    if (nota1 < 0.0) nota1 = 0.0;
+    if (nota1 > 5.0) nota1 = 5.0;
+    if (nota2 < 0.0) nota2 = 0.0;
+    if (nota2 > 5.0) nota2 = 5.0;
+    if (nota3 < 0.0) nota3 = 0.0;
+    if (nota3 > 5.0) nota3 = 5.0;
+    if (nota4 < 0.0) nota4 = 0.0;
+    if (nota4 > 5.0) nota4 = 5.0;
+
+    double pesoNota1 = 0.3279;
+    double pesoNota2 = 0.3279;
+    double pesoNota3 = 0.3279;
+    double pesoNota4 = 0.0164;
+
+    double notaFinal = (nota1 * pesoNota1) + (nota2 * pesoNota2) + (nota3 * pesoNota3) + (nota4 * pesoNota4);
+
+    if (notaFinal < 0.0) notaFinal = 0.0;
+    if (notaFinal > 5.0) notaFinal = 5.0;
+
+    setState(() {
+      _notaFinal = notaFinal;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Calculadora de Notas'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: _nota1Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 1',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _nota2Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 2',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _nota3Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 3',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _nota4Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 4',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _calcularNotaFinal,
+              child: Text('Calcular Nota Final'),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Nota Final: ${_notaFinal.toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 24.0),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+
